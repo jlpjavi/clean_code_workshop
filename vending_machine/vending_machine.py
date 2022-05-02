@@ -1,5 +1,5 @@
-from .enums import *
-from .can_container import *
+from enums import *
+from can_container import *
 
 
 class VendingMachine:
