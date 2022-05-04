@@ -7,17 +7,18 @@ class VendingMachine:
         self.cans = {}
         self.payment_method = None
 
-    def set_value(self, v):
-        self.payment_method = 1
-        if hasattr(self,'c'):
-            self.c += v
+    def add_coins(self, coins):
+        self.payment_method = "COINS"
+        if hasattr(self,'coins'):
+            self.coins += coins
         else:
-            self.c = v
+            self.coins = coins
 
     def insert_chip(self, chipknip):
         # TODO
         # can't pay with chip in brittain
-        self.payment_method = 2
+        
+        self.payment_method = "CHIPKNIP"
         self.chipknip = chipknip
 
     # delivers the can if all ok
@@ -34,12 +35,12 @@ class VendingMachine:
                 res = self.cans[choice].type
             # or price matches
             else:
-                if self.payment_method == 1: # paying with coins
-                    if self.c != None and self.cans[choice].price <= self.c:
+                if self.payment_method == "COINS": # paying with coins
+                    if self.coins != None and self.cans[choice].price <= self.coins:
                         res = self.cans[choice].type
-                        self.c -= self.cans[choice].price
+                        self.coins -= self.cans[choice].price
 
-                elif self.payment_method == 2: # paying with chipknip - 
+                elif self.payment_method == "CHIPKNIP": # paying with chipknip - 
                     # TODO: if this machine is in belgium this must be an error
                     if (self.chipknip.has_value(self.cans[choice].price)):
                         self.chipknip.reduce(self.cans[choice].price)
@@ -70,9 +71,9 @@ class VendingMachine:
 
     def get_change(self):
         to_return = 0
-        if (self.c > 0):
-            to_return = self.c
-            self.c = 0
+        if (self.coins > 0):
+            to_return = self.coins
+            self.coins = 0
         return to_return
 
     def configure(self, choice, c, n, price = 0):

@@ -36,7 +36,7 @@ class VendingMachineTest(unittest.TestCase):
         self.machine.configure(Choice.sprite, Can.sprite, 10, 1)
         self.machine.configure(Choice.fanta, Can.fanta, 10, 2)
 
-        self.machine.set_value(2)
+        self.machine.add_coins(2)
         self.assertEqual(Can.fanta, self.machine.deliver(Choice.fanta))
         self.assertEqual(Can.none, self.machine.deliver(Choice.sprite))
 
@@ -44,7 +44,7 @@ class VendingMachineTest(unittest.TestCase):
         self.machine.configure(Choice.sprite, Can.sprite, 10, 1)
         self.machine.configure(Choice.fanta, Can.fanta, 10, 2)
 
-        self.machine.set_value(2)
+        self.machine.add_coins(2)
         self.assertEqual(Can.sprite, self.machine.deliver(Choice.sprite))
         self.assertEqual(Can.sprite, self.machine.deliver(Choice.sprite))
         self.assertEqual(Can.none, self.machine.deliver(Choice.sprite))
@@ -53,15 +53,15 @@ class VendingMachineTest(unittest.TestCase):
         self.machine.configure(Choice.sprite, Can.sprite, 10, 1)
         self.machine.configure(Choice.fanta, Can.fanta, 10, 2)
 
-        self.machine.set_value(1)
-        self.machine.set_value(1)
+        self.machine.add_coins(1)
+        self.machine.add_coins(1)
         self.assertEqual(Can.sprite, self.machine.deliver(Choice.sprite))
         self.assertEqual(Can.sprite, self.machine.deliver(Choice.sprite))
         self.assertEqual(Can.none, self.machine.deliver(Choice.sprite))
 
     def test_returns_change(self):
         self.machine.configure(Choice.sprite, Can.sprite, 10, 1)
-        self.machine.set_value(2)
+        self.machine.add_coins(2)
         self.assertEqual(2, self.machine.get_change())
         self.assertEqual(0, self.machine.get_change())
 
